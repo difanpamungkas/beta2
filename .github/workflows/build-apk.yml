@@ -1,8 +1,4 @@
 
-     - name: Validate AndroidManifest.xml
-       run: |
-          python3 -c "import xml.etree.ElementTree as ET; ET.parse('app/src/main/AndroidManifest.xml'); print('Manifest XML valid')"
-          
 name: Build Beta APK
 
 on:
@@ -29,10 +25,10 @@ jobs:
         shell: bash
         run: |
           SDK_ROOT="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
-          SDKMANAGER="$(find "$SDK_ROOT/cmdline-tools" -type f -name sdkmanager | sort -V | tail -n 1)"
+          SDKMANAGER="$(find "$SDK_ROOT/cmdline-tools" -type f -name sdkmanager 2>/dev/null | sort -V | tail -n 1)"
 
           if [ -z "$SDKMANAGER" ]; then
-            echo "sdkmanager tidak ditemukan"
+            echo "ERROR: sdkmanager tidak ditemukan"
             exit 1
           fi
 
@@ -47,6 +43,11 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
+
+      - name: Validate AndroidManifest.xml
+        shell: bash
+        run: |
+          python3 -c "import xml.etree.ElementTree as ET; ET.parse('app/src/main/AndroidManifest.xml'); print('Manifest XML valid')"
 
       - name: Build APK
         run: gradle assembleDebug
