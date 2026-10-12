@@ -1,4 +1,8 @@
 
+     - name: Validate AndroidManifest.xml
+       run: |
+          python3 -c "import xml.etree.ElementTree as ET; ET.parse('app/src/main/AndroidManifest.xml'); print('Manifest XML valid')"
+          
 name: Build Beta APK
 
 on:
