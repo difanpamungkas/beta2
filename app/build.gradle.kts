@@ -1,6 +1,7 @@
 
 plugins {
     id("com.android.application")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -11,7 +12,7 @@ android {
         applicationId = "com.example.beta"
         minSdk = 23
         targetSdk = 28
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
     }
 }
